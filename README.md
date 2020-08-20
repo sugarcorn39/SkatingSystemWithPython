@@ -1,0 +1,2 @@
+# SkatingSystemWithPython
+pythonによるスケーティングシステムです
