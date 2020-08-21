@@ -4,6 +4,8 @@
 import statistics
 import numpy as np
 import random
+import csv
+import os.path
 
 import logger
 
@@ -347,10 +349,39 @@ def main():
     # スケーティング開始
     skating(player_list)
     
-    # 結果出力
+    # コンソール結果出力
     print("スケーティング結果")
     for player in player_list:
         print("背番号" +  str(player.number) + " : " +  str(player.score) + "位")
+
+    # csv出力
+    if os.path.isfile("./output/csv/skating_result.csv") :
+        # 対話形式で確認
+        while True:
+            print("すでにファイルが存在します。上書きしますか？")
+            inp = input("[Y]es/[N]o? >> ").lower()
+            if inp in ("y", "yes", "n", "no"):
+                inp = inp.startswith("y") # inp[0] == 'y'と同義
+                                        # string.startwithは最初の文字列を調べる
+                break
+            print("Error! Input again.")
+
+        if inp == False:
+            print("csv出力せずに終了")
+            return
+
+    print("csvファイルを出力")
+    with open("./output/csv/skating_result.csv", "w") as f:
+        writer = csv.writer(f)
+        writer.writerow(["skating result"])
+        writer.writerow(["name","number","score","order",])
+        for player in player_list:
+            player_row = []
+            player_row.append(player.name)
+            player_row.append(player.number)
+            player_row.append(player.score)
+            player_row.extend(player.order)
+            writer.writerow(player_row)
 
 if __name__ == '__main__':
     main()
