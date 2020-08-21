@@ -3,7 +3,6 @@
 
 import statistics
 import numpy as np
-import random
 import csv
 import os.path
 
@@ -337,7 +336,7 @@ def main():
     order = list(range(1,len(player_list) + 1))
     rand_order = []
     for i in range(judge_num):
-        rand_order = random.sample(order, 6)
+        rand_order = np.random.choice(order, size=6, replace=False)
         for j in range(6):
             player_list[j].setOrder(rand_order[j])
 
